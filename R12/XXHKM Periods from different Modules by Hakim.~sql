@@ -1,0 +1,109 @@
+--Doc ID 552244.1
+--------GL（采购用总帐会计期),应收，应付，资产
+SELECT p.application_name,
+       p.application_id,
+       p.application_short_name,
+       p.basepath,
+       t.set_of_books_id,
+       t.period_name,
+       t.closing_status,
+       glps.show_status
+  FROM gl.gl_period_statuses        t,
+       fnd_application_vl           p,
+       gl_lookups_period_statuses_v glps
+
+ WHERE t.application_id = p.application_id
+   AND glps.status_flag = t.closing_status
+   AND p.application_id = 200
+--and t.set_of_books_id='2026'
+ ORDER BY t.application_id ASC,
+          t.start_date     ASC;
+
+SELECT set_of_books_id,
+       period_name,
+       decode(closing_status, 'O', 'Open', 'C', 'Closed', 'F', 'Future', 'N', 'Never', closing_status) gl_status,
+       start_date,
+       end_date
+  FROM gl_period_statuses
+ WHERE trunc(start_date) > SYSDATE - 40 --adjust date as needed
+   AND trunc(start_date) < SYSDATE + 1
+   AND application_id = 101
+ ORDER BY application_id,
+          start_date DESC;
+
+--PO Period
+SELECT set_of_books_id,
+       application_id,
+       period_name,
+       decode(closing_status, 'O', 'Open', 'C', 'Closed', 'F', 'Future', 'N', 'Never', closing_status) po_status,
+       start_date,
+       end_date
+  FROM gl_period_statuses
+ WHERE trunc(start_date) > SYSDATE - 40 --adjust date as needed
+   AND trunc(start_date) < SYSDATE + 1
+   AND application_id = 201
+ ORDER BY application_id,
+          start_date DESC;
+
+--INV
+SELECT oap.organization_id "Organization ID",
+       mp.organization_code "Organization Code",
+       oap.period_name "Period Name",
+       oap.period_start_date "Start Date",
+       oap.period_close_date "Closed Date",
+       decode(oap.open_flag,
+              'P',
+              'P - Period Close is processing',
+              'N',
+              'N - Period Close process is completed',
+              'Y',
+              'Y - Period is open if Closed Date is NULL',
+              'Unknown') "Period Status"
+  FROM org_acct_periods oap,
+       mtl_parameters   mp
+ WHERE oap.organization_id = mp.organization_id
+   AND trunc(period_start_date) > SYSDATE - 40 --adjust date as needed
+   AND trunc(period_start_date) < SYSDATE + 1
+ ORDER BY oap.organization_id,
+          oap.period_start_date;
+
+----------库存会计期间－－－－－－
+
+SELECT oap.organization_id,
+       oap.period_name,
+       oap.period_set_name,
+       oap.acct_period_id,
+       oap.status
+  FROM org_acct_periods_v oap
+ WHERE oap.organization_id != 0
+   AND oap.organization_id = 83
+--and oap.period_name='12-10'
+ ORDER BY oap.organization_id,
+          oap.start_date;
+
+--------------日历--------
+
+SELECT *
+  FROM gl_period_sets;
+
+---------成本期间－－－－－－－－－－
+
+SELECT *
+  FROM gmf_calendar_assignments; ---期间分配
+
+SELECT *
+  FROM cm_cldr_dtl; ---期间明细
+
+SELECT *
+  FROM gl.gl_ledger_config_details; ---- 法人实体
+
+SELECT *
+  FROM gmf_period_statuses p
+ WHERE p.period_code = '04-10'; ---期间状态
+
+SELECT *
+  FROM org_organization_definitions ood;
+SELECT *
+  FROM fnd_application fa
+ WHERE 1 = 1
+   AND fa.application_id = 201;
