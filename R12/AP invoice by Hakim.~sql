@@ -55,10 +55,10 @@ SELECT aph.invoice_num,
   FROM ap_invoices_all              aph,
        ap_invoice_lines_all         apl,
        ap_invoice_distributions_all apd,
-       xla_distribution_links       xdl,
+       xla_distribution_links   xdl,
        xla_ae_headers               xah,
        xla_ae_lines                 xal,
-       xla.xla_transaction_entities xte
+       xla.xla_transaction_entities     xte
  WHERE 1 = 1
    AND aph.invoice_id = apl.invoice_id
    AND aph.invoice_id = apd.invoice_id
@@ -77,8 +77,7 @@ SELECT aph.invoice_num,
    AND xte.application_id = 200 --SQLAP
    AND aph.invoice_num = 'SG00043803*7'
    AND aph.org_id = 82 --HEA
-AND apl.line_number = 3
-AND apd.invoice_distribution_id = 4737175
+--AND apl.line_number = 3
 ;
 
 SELECT apd.invoice_distribution_id,
@@ -100,7 +99,7 @@ SELECT apd.invoice_distribution_id,
    AND apl.line_number = apd.invoice_line_number
    AND aph.invoice_num = 'SG00043803*7'
    AND aph.org_id = 82 --HEA
-   AND apl.line_number = 1;
+   AND apl.line_number = 3;
 /* UPDATE ap_invoices_all aph
  SET aph.invoice_num = 'HKM18031302'--HKIM18021302
  WHERE 1=1
