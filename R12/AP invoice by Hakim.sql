@@ -19,7 +19,7 @@ SELECT aph.creation_date,
    AND aph.task_id = pt.task_id(+)
    AND aph.org_id = 82 --84--SHE--82 --HEA
    AND aph.project_id = ppa.project_id(+) --left join
-   AND aph.invoice_num = 'SG00043803*7' --'107/5350';--454220
+   AND aph.invoice_num = 'SG00043803*8' --'107/5350';--454220
       --AND aph.invoice_num LIKE 'HKM%'
    AND aph.creation_date >= to_date('2018-03-11', 'yyyy-mm-dd')
  ORDER BY aph.creation_date DESC;
@@ -32,6 +32,7 @@ SELECT aph.creation_date,
 END;*/
 
 SELECT aph.invoice_num,
+       xah.event_id,
        xal.ae_line_num,
        xte.entity_code,
        apd.invoice_distribution_id  inv_dis_id,
@@ -75,10 +76,10 @@ SELECT aph.invoice_num,
    AND xah.application_id = 200 --SQLAP
    AND xal.application_id = 200 --SQLAP
    AND xte.application_id = 200 --SQLAP
-   AND aph.invoice_num = 'SG00043803*7'
+   AND aph.invoice_num = 'HKM180401' --'18010016'--'SG00043803*7'
    AND aph.org_id = 82 --HEA
-AND apl.line_number = 3
-AND apd.invoice_distribution_id = 4737175
+--AND apl.line_number = 1
+--AND apd.invoice_distribution_id = 4737175
 ;
 
 SELECT apd.invoice_distribution_id,
@@ -98,9 +99,10 @@ SELECT apd.invoice_distribution_id,
    AND aph.invoice_id = apl.invoice_id
    AND aph.invoice_id = apd.invoice_id
    AND apl.line_number = apd.invoice_line_number
-   AND aph.invoice_num = 'SG00043803*7'
+   AND aph.invoice_num = 'HKM180401' --'18010016'--'SG00043803*7'
    AND aph.org_id = 82 --HEA
-   AND apl.line_number = 1;
+--AND apl.line_number = 1
+;
 /* UPDATE ap_invoices_all aph
  SET aph.invoice_num = 'HKM18031302'--HKIM18021302
  WHERE 1=1

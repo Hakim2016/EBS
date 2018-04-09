@@ -3,7 +3,6 @@ SELECT fu.end_date,
        ppf.full_name,
        ppf.effective_start_date,
        ppf.effective_end_date,
---       fl.
        fl.*
   FROM fnd_logins       fl,
        per_all_people_f ppf,
@@ -14,7 +13,6 @@ SELECT fu.end_date,
    AND fu.employee_id = ppf.person_id(+)
    AND nvl(fu.end_date, SYSDATE) BETWEEN nvl(ppf.effective_start_date, SYSDATE) AND
        nvl(ppf.effective_end_date, SYSDATE)
-   AND fl.start_time > TRUNC(SYSDATE)
       --AND fu.user_name NOT IN ('HAND_ADMIN')
       --AND fu.user_name IN ('HAND_HDH')
    AND fl.login_id = (SELECT MAX(fl_sub.login_id)

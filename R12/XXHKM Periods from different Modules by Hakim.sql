@@ -1,13 +1,15 @@
 --Doc ID 552244.1
 --------GL（采购用总帐会计期),应收，应付，资产
-SELECT p.application_name,
-       p.application_id,
-       p.application_short_name,
+SELECT p.application_name appl_name,
+       p.application_id app_id,
+       p.application_short_name app_short,
        p.basepath,
        t.set_of_books_id,
        t.period_name,
        t.closing_status,
-       glps.show_status
+       glps.show_status,
+       t.start_date,
+       t.end_date
   FROM gl.gl_period_statuses        t,
        fnd_application_vl           p,
        gl_lookups_period_statuses_v glps
@@ -16,6 +18,7 @@ SELECT p.application_name,
    AND glps.status_flag = t.closing_status
    AND p.application_id = 200
 --and t.set_of_books_id='2026'
+AND t.period_name = 'MAR-18'
  ORDER BY t.application_id ASC,
           t.start_date     ASC;
 
@@ -77,7 +80,7 @@ SELECT oap.organization_id,
   FROM org_acct_periods_v oap
  WHERE oap.organization_id != 0
    AND oap.organization_id = 83
---and oap.period_name='12-10'
+and oap.period_name='MAR-18'
  ORDER BY oap.organization_id,
           oap.start_date;
 
@@ -131,7 +134,7 @@ SELECT sob.name "Set of Books",
    AND sob.set_of_books_id = ps.set_of_books_id
    AND fnd.application_id = ps.application_id
    AND ps.adjustment_period_flag = 'N'
-   AND (trunc(SYSDATE) -- Comment line if a a date other than SYSDATE is being tested.
+   AND (trunc(SYSDATE-30) -- Comment line if a a date other than SYSDATE is being tested.
        --AND ('01-APR-2011' -- Uncomment line if a date other than SYSDATE is being tested.
        BETWEEN trunc(ps.start_date) AND trunc(ps.end_date))
  ORDER BY ps.set_of_books_id,
@@ -159,7 +162,7 @@ SELECT mp.organization_id "Organization ID",
        mtl_parameters               mp
  WHERE oap.organization_id = mp.organization_id
    AND mp.organization_id = ood.organization_id(+)
-   AND (trunc(SYSDATE) -- Comment line if a a date other than SYSDATE is being tested.
+   AND (trunc(SYSDATE-30) -- Comment line if a a date other than SYSDATE is being tested.
        --AND ('01-APR-2011' -- Uncomment line if a date other than SYSDATE is being tested.
        BETWEEN trunc(oap.period_start_date) AND trunc(oap.schedule_close_date))
  ORDER BY mp.organization_id,
