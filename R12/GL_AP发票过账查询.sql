@@ -2,6 +2,7 @@
 SELECT h.creation_date,
 h.description,
 c.code_combination_id,
+i.
        h.je_header_id,
        h.name,
        l.ae_header_id,
@@ -35,7 +36,7 @@ c.code_combination_id,
        apps.ap_suppliers                 s,
        apps.xla_events                   e,
        xla.xla_transaction_entities     te
- WHERE ad.invoice_id = 1944244--1942629--10194
+ WHERE ad.invoice_id = 1942629--1944244--1942629--10194
    AND jl.je_header_id = h.je_header_id
    AND jl.code_combination_id = c.code_combination_id
    AND al.gl_sl_link_id = r.gl_sl_link_id

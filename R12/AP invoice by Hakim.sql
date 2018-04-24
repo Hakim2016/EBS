@@ -19,10 +19,40 @@ SELECT aph.creation_date,
    AND aph.task_id = pt.task_id(+)
    AND aph.org_id = 82 --84--SHE--82 --HEA
    AND aph.project_id = ppa.project_id(+) --left join
-   AND aph.invoice_num = 'SG00043803*8' --'107/5350';--454220
-      --AND aph.invoice_num LIKE 'HKM%'
-   AND aph.creation_date >= to_date('2018-03-11', 'yyyy-mm-dd')
+   AND aph.invoice_num = '210-702-004' --'SG00043803*8' --'107/5350';--454220
+--AND aph.invoice_num LIKE 'HKM%'
+--AND aph.creation_date >= to_date('2018-03-11', 'yyyy-mm-dd')
  ORDER BY aph.creation_date DESC;
+
+SELECT apl.description,
+       apl.amount,
+       aph.invoice_num,
+       aph.attribute_category,
+       aph.attribute8,
+       aph.*,
+       apl.*
+  FROM ap_invoices_all      aph,
+       ap_invoice_lines_all apl
+ WHERE 1 = 1
+   AND aph.invoice_id = apl.invoice_id
+   AND aph.invoice_num LIKE 'USD%YUL%';
+
+SELECT *
+  FROM xla.xla_transaction_entities xte
+ WHERE 1 = 1
+   AND xte.application_id = 200 --AP
+   AND xte.source_id_int_1 = 1950245;
+
+SELECT xal.entered_dr, xal.entered_cr, xte.*, xah.*, xal.*
+  FROM xla.xla_transaction_entities xte,
+       xla_ae_headers               xah,
+       xla_ae_lines                 xal
+ WHERE 1 = 1
+   AND xah.entity_id = xte.entity_id
+   AND xah.ae_header_id = xal.ae_header_id
+   AND xte.application_id = 200 --AP
+   AND xte.source_id_int_1 = 1950245;
+
 /*BEGIN
   fnd_global.apps_initialize(user_id      => 4270,
                              resp_id      => 50676,
@@ -76,7 +106,7 @@ SELECT aph.invoice_num,
    AND xah.application_id = 200 --SQLAP
    AND xal.application_id = 200 --SQLAP
    AND xte.application_id = 200 --SQLAP
-   AND aph.invoice_num = 'HKM180401' --'18010016'--'SG00043803*7'
+   AND aph.invoice_num = '210-702-004' --'18010016'--'SG00043803*7'
    AND aph.org_id = 82 --HEA
 --AND apl.line_number = 1
 --AND apd.invoice_distribution_id = 4737175
@@ -99,9 +129,10 @@ SELECT apd.invoice_distribution_id,
    AND aph.invoice_id = apl.invoice_id
    AND aph.invoice_id = apd.invoice_id
    AND apl.line_number = apd.invoice_line_number
-   AND aph.invoice_num = 'HKM180401' --'18010016'--'SG00043803*7'
+   AND aph.invoice_num = '210-702-004' --'18010016'--'SG00043803*7'
    AND aph.org_id = 82 --HEA
---AND apl.line_number = 1
+AND apl.line_number = 11
+AND apd.amount <> 0
 ;
 /* UPDATE ap_invoices_all aph
  SET aph.invoice_num = 'HKM18031302'--HKIM18021302
@@ -113,4 +144,9 @@ SELECT FROM xla_transaction_entities xte,
             xla_ae_lines             xal
  WHERE 1 = 1
    AND xte.ledger_id = xah.ledger_id
-   AND xte.entity_id = xah.entity_id
+   AND xte.entity_id = xah.entity_id;
+
+SELECT *
+  FROM fnd_application fa
+ WHERE 1 = 1
+   AND fa.application_id = 200;

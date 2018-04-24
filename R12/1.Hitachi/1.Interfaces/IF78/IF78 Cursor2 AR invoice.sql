@@ -32,7 +32,7 @@ SELECT CT.CUSTOMER_TRX_ID,
          and ct.TRX_NUMBER = xih.invoice_number(+)
          and xih.oe_header_id = oh.header_id(+)
          and ct.org_id = hou.organization_id
-         AND CT.TRX_NUMBER IN ('JPE-17000461', 'JPE-17000451', 'JPE-17000463', 'JPE-17000466')
+         AND CT.TRX_NUMBER IN ('10020','JPE-17000461', 'JPE-17000451', 'JPE-17000463', 'JPE-17000466')
          
          and not exists
        (select 1
@@ -41,7 +41,7 @@ SELECT CT.CUSTOMER_TRX_ID,
                  and v.source_code = 'AR')
          --and ct.last_update_date >= nvl(P_START_DATE, ct.last_update_date)
          and hou.set_of_books_id = nvl(hou.set_of_books_id, 2041/*g_ledger_id*/)
-         and exists
+/*         and exists
        (select 1 
                 from xla.xla_transaction_entities xte, xla_ae_headers xah
                where xte.application_id = xah.application_id
@@ -49,7 +49,7 @@ SELECT CT.CUSTOMER_TRX_ID,
                  and xte.source_id_int_1 = CT.customer_trx_id
                  and xah.accounting_entry_status_code = 'F'
                  and xte.application_id = 222
-                 AND xte.entity_code = 'TRANSACTIONS')
+                 AND xte.entity_code = 'TRANSACTIONS')*/
          and (ROUND(APS.AMOUNT_DUE_ORIGINAL, 2) > 0 or
              ROUND(APS.AMOUNT_DUE_ORIGINAL, 2) = 0)
          AND HOU.set_of_books_id = 2041/*g_ledger_id*/

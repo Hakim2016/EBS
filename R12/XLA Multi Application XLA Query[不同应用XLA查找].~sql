@@ -16,7 +16,8 @@ SELECT *
    AND xte.application_id = 200
    AND xdl.application_id = 200
    ;
-   
+
+--Oracle VPD    
 SELECT *
 FROM dba_policies dp
 WHERE 1=1

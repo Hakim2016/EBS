@@ -2,12 +2,13 @@
 SELECT t.responsibility_id, t.*
   FROM fnd_responsibility t
  WHERE 1 = 1
-   AND t.responsibility_key LIKE '%HEA%SCM_SUPER_USER%';
+   AND t.responsibility_key LIKE '%HET%SCM_SUPER_USER%';
    --HEA SCM SUPER USER
 
 select * from fnd_user fu where fu.user_name = 'HAND_HKM';
 --org_id      Resp_id     Resp_app_id
 --HEA 82      50676       660
+--HET 141     51272       20005
 --SHE 84      50778       20005
 
 BEGIN

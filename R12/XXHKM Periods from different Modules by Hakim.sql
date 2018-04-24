@@ -16,9 +16,11 @@ SELECT p.application_name appl_name,
 
  WHERE t.application_id = p.application_id
    AND glps.status_flag = t.closing_status
-   AND p.application_id = 200
+   --AND p.application_id = 222
 --and t.set_of_books_id='2026'
-AND t.period_name = 'MAR-18'
+--AND t.period_name = 'APR-18'
+AND t.start_date = to_date('2017-10-01','yyyy-mm-dd')
+AND t.set_of_books_id = 2021
  ORDER BY t.application_id ASC,
           t.start_date     ASC;
 
@@ -33,6 +35,8 @@ SELECT set_of_books_id,
    AND application_id = 101
  ORDER BY application_id,
           start_date DESC;
+
+SELECT * FROM fnd_application fa WHERE fa.application_id = 101;
 
 --PO Period
 SELECT set_of_books_id,
@@ -170,3 +174,28 @@ SELECT mp.organization_id "Organization ID",
           
           
 --The reason Organization Name may return NULL is that ORG_ORGANIZATION_DEFINITIONS (OOD) is a View which uses the View HR_ORGANIZATION_UNITS whose HR Security settings may prevent ODD from returning data.
+
+/*有期间的模块：GL、AP、AR、FA、INV、PO、PA、AGIS
+对应标准路径
+GL：    总账-设置-打开/关闭
+AP：    应付-会计科目-控制应付款期间
+AR：    应收-控制-会计科目-打开/关闭期间
+FA：    资产-折旧-运行折旧
+INV：  成本-会计关闭周期-库存会计期
+PO：   采购管理->设置->财务系统->会计->打开和关闭期间
+PA：    还不知道
+AGIS：设置-期间-打开/关闭
+
+TIPS
+   PA、PO、INV、AP、AR的期间由GL决定，除PA外自动同步
+   ap期间打开必须gl和po期间打开
+   inv、fa期间关闭后不允许再打开
+  agis期间与事务处理相关，每种事务处理单独进行期间的控制
+
+20150617 更新
+    有期间的模块：AGIS
+    对应的标准路径：AGIS：设置-期间-打开/关闭
+    注：AGIS期间与事务处理相关，每种事务处理单独进行期间的控制
+20151124 更新
+    一般关期间顺序：AP—PO—FA—AR/INV—GL
+    使用PAC一般关期间顺序：AP—PO—FA/AR—INV—PAC—GL*/

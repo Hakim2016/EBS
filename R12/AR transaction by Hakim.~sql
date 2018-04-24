@@ -4,7 +4,9 @@
 SELECT rct.*
   FROM ra_customer_trx_all       rct
 WHERE 1=1
-AND rct.trx_number = 'JPYI7066169';
+AND rct.trx_number IN ('10020','JPE-17000461', 'JPE-17000451', 'JPE-17000463', 'JPE-17000466')--'JPYI7066169'
+--AND rct.customer_trx_id = 4022542
+;
 
 
 

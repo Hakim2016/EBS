@@ -17,7 +17,8 @@ SELECT *
    AND xdl.application_id = 200
    ;
 
---Oracle VPD    
+--Oracle VPD   
+--AP by Hakim 
 SELECT *
 FROM dba_policies dp
 WHERE 1=1
@@ -50,6 +51,21 @@ SELECT *
    AND xte.entity_code = 'AP_INVOICES'
    AND xdl.source_distribution_type = 'AP_INV_DIST'--improve the efficient
    AND aph.invoice_num = '10005873';
+   
+--AR by Hakim   
+SELECT *
+  FROM xla.xla_transaction_entities xte,
+       xla_ae_headers               xah
+ WHERE xte.application_id = xah.application_id
+   AND xte.entity_id = xah.entity_id
+   AND xte.source_id_int_1 = 4206255--ct.customer_trx_id
+   AND xah.accounting_entry_status_code = 'F'
+   AND xte.application_id = 222
+   AND xte.entity_code = 'TRANSACTIONS';
+   
+SELECT DISTINCT xte.entity_code FROM xla.xla_transaction_entities xte
+WHERE 1=1
+AND xte.creation_date > SYSDATE -360;
 
 --start
 /*
@@ -248,3 +264,7 @@ SELECT xdl.application_id,
    AND wta.transaction_id = wt.transaction_id
    AND wt.project_id = ppa.project_id(+)
    AND wt.task_id = pt.task_id(+);
+
+SELECT * FROM fnd_application fa
+WHERE 1=1
+AND fa.application_id = 222;
