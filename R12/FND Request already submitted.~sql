@@ -1,6 +1,5 @@
 SELECT v.request_id,
        v.request_date,
-       v.ACTUAL_COMPLETION_DATE,
        v.PHASE_CODE,
        v.STATUS_CODE,
        v.program_short_name short_name,
@@ -22,19 +21,12 @@ SELECT v.request_id,
  WHERE 1=1
  --AND v.program_short_name = 'XXPAUPDATESTATUS'
 --AND v.program LIKE 'Create Accounting%'
-AND v.USER_CONCURRENT_PROGRAM_NAME LIKE 
---'XXPA:Project Status Update(BA)'
---'XXAR: Delivery Interface outbound GSCM to R3'
-'XXPA%Project Revenue and Cost of Sales Recognition Request'
---'Period Close Reconciliation Report'
---'PRC: Transaction Import'
---'XXPA:Project Cost Data Outbound'
+AND v.USER_CONCURRENT_PROGRAM_NAME LIKE 'XXPA:Project Cost Data Outbound'
 
---AND v.request_date > TRUNC(SYSDATE)
---AND trunc(v.request_date) = to_date('2018-04-26','yyyy-mm-dd')
- --AND v.argument_text LIKE 'HEA_Oracle,%'
+AND v.request_date > TRUNC(SYSDATE)
+ --AND v.argument_text LIKE ', , N, N, N, Y, %'
  --AND v.requestor = 'HAND_HKM'
- --AND v.status_code = 'Q'
+ AND v.status_code = 'Q'
  ORDER BY  v.request_id DESC
  ;
  

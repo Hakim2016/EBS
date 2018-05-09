@@ -1,0 +1,11 @@
+--info-IF77
+--AP
+XXAP_JOURNAL_TO_R3_DATA_INT;
+xxap_journal_to_R3_pkg;--.main
+/*
+XXAPJTOR3
+xxap_journal_to_R3_pkg.main
+XXAP: Journal Interface outbound to R3
+
+*/
+SELECT * FROM XXAP_JOURNAL_TO_R3_DATA_INT;

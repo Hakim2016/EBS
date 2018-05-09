@@ -5,7 +5,7 @@ SELECT rct.org_id,rct.trx_number, rct.last_update_date,
        rct.*
   FROM ra_customer_trx_all rct
  WHERE 1 = 1
-   AND rct.trx_number IN ('JPE-17000146')
+   AND rct.trx_number IN ('10000017753')
 --AND rct.customer_trx_id = 4022542
 ;
 

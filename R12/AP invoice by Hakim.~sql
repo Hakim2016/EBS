@@ -26,13 +26,16 @@ SELECT aph.creation_date,
 
 SELECT apl.description,
        apl.amount,
+       aph.invoice_num,
+       aph.attribute_category,
+       aph.attribute8,
        aph.*,
        apl.*
   FROM ap_invoices_all      aph,
        ap_invoice_lines_all apl
  WHERE 1 = 1
    AND aph.invoice_id = apl.invoice_id
-   AND aph.invoice_num = '210-702-004';
+   AND aph.invoice_num LIKE 'USD%YUL%';
 
 SELECT *
   FROM xla.xla_transaction_entities xte

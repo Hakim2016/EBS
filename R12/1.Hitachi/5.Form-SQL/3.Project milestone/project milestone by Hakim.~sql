@@ -18,8 +18,8 @@ to_date(t.period_name, 'MON-YY') period,
    AND t.org_id = 82
    AND ppa.org_id = t.org_id
    AND t.project_id = ppa.project_id
-   AND ppa.segment1 = '11000958'--'11000363'
-   AND t.mfg_no = 'SAE0191-SG'--'SBC0256-SG'
+   --AND ppa.segment1 = '11000363'--'11000958'--'11000363'
+   AND t.mfg_no = 'SBC0266-SG'--'SAE0191-SG'--'SBC0256-SG'
    
    AND to_date(period_name, 'MON-YY') IN
        (SELECT MIN(to_date(period_name, 'MON-YY'))

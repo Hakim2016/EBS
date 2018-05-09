@@ -19,8 +19,8 @@ SELECT p.application_name appl_name,
    --AND p.application_id = 222
 --and t.set_of_books_id='2026'
 --AND t.period_name = 'APR-18'
-AND t.start_date = to_date('2017-10-01','yyyy-mm-dd')
-AND t.set_of_books_id = 2021
+AND t.start_date = to_date('2018-05-01','yyyy-mm-dd')
+AND t.set_of_books_id = 2041--2021
  ORDER BY t.application_id ASC,
           t.start_date     ASC;
 
@@ -181,9 +181,10 @@ GL：    总账-设置-打开/关闭
 AP：    应付-会计科目-控制应付款期间
 AR：    应收-控制-会计科目-打开/关闭期间
 FA：    资产-折旧-运行折旧
-INV：  成本-会计关闭周期-库存会计期
+INV：  库存-会计关闭周期-库存会计期
+       Inventory->Accounting Close Cycle
 PO：   采购管理->设置->财务系统->会计->打开和关闭期间
-PA：    还不知道
+PA：    PA->Setup->System->PA Periods/GL Periods
 AGIS：设置-期间-打开/关闭
 
 TIPS
