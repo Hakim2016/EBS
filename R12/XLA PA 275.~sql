@@ -1,0 +1,47 @@
+SELECT xe.event_id,
+       xte.entity_id,
+       xe.event_date,
+       xe.creation_date,
+       xah.gl_transfer_status_code posted,
+       xah.gl_transfer_date,
+       xal.ae_header_id,
+       xal.ae_line_num,
+       xal.accounting_class_code acc_clss_cd,
+       xal.accounted_dr          acc_dr,
+       xal.accounted_cr          acc_cr,
+       xal.accounting_date,
+       xte.entity_id,
+       xte.entity_code,
+       xte.creation_date,
+       xte.transaction_number,
+       xte.ledger_id,
+       xah.event_id,
+       xah.accounting_date,
+       xah.gl_transfer_date,
+       xah.description,
+       xah.completed_date,
+       xah.period_name,
+       xte.*
+  FROM xla.xla_transaction_entities xte,
+       xla_events                   xe,
+       xla_ae_headers               xah,
+       xla_ae_lines                 xal
+ WHERE 1 = 1
+   AND xte.application_id = 275
+   AND xte.entity_id = xe.entity_id
+   AND xte.application_id = xe.application_id
+   AND xe.event_id = xah.event_id
+   AND xte.entity_id = xah.entity_id
+   AND xah.application_id = xte.application_id
+   AND xah.ae_header_id = xal.ae_header_id
+   AND xah.description LIKE --'53020155.JAC0084-IN.5031616'
+      --'53020400.JED0210-VN%'
+      --'53020165%'
+       '53020261%'
+   AND (nvl(xal.accounted_dr, 0) + nvl(xal.accounted_cr, 0)) <> 0
+--AND 
+;
+SELECT *
+  FROM fnd_application fa
+ WHERE 1 = 1
+   AND fa.application_short_name = 'PA';

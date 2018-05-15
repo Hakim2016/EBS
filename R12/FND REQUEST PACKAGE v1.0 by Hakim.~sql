@@ -7,4 +7,4 @@ SELECT fef.user_executable_name,
        fef.*
   FROM fnd_executables_form_v fef
  WHERE 1 = 1
-   AND fef.executable_name = 'XXPAPREFG';
+   AND fef.executable_name = 'XXOMB007'

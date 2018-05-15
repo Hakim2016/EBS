@@ -9,7 +9,8 @@ SELECT p.application_name appl_name,
        t.closing_status,
        glps.show_status,
        t.start_date,
-       t.end_date
+       t.end_date,
+       t.last_updated_by
   FROM gl.gl_period_statuses        t,
        fnd_application_vl           p,
        gl_lookups_period_statuses_v glps
@@ -19,8 +20,8 @@ SELECT p.application_name appl_name,
    --AND p.application_id = 222
 --and t.set_of_books_id='2026'
 --AND t.period_name = 'APR-18'
-AND t.start_date = to_date('2018-05-01','yyyy-mm-dd')
-AND t.set_of_books_id = 2041--2021
+AND t.start_date = to_date('2018-04-01','yyyy-mm-dd')
+AND t.set_of_books_id = 2021--2041--2021
  ORDER BY t.application_id ASC,
           t.start_date     ASC;
 
@@ -69,8 +70,9 @@ SELECT oap.organization_id "Organization ID",
   FROM org_acct_periods oap,
        mtl_parameters   mp
  WHERE oap.organization_id = mp.organization_id
-   AND trunc(period_start_date) > SYSDATE - 40 --adjust date as needed
-   AND trunc(period_start_date) < SYSDATE + 1
+   --AND trunc(period_start_date) > SYSDATE - 40 --adjust date as needed
+   --AND trunc(period_start_date) < SYSDATE + 1
+   AND oap.period_start_date =  to_date('2018-04-01','yyyy-mm-dd')
  ORDER BY oap.organization_id,
           oap.period_start_date;
 
@@ -181,7 +183,8 @@ GL：    总账-设置-打开/关闭
 AP：    应付-会计科目-控制应付款期间
 AR：    应收-控制-会计科目-打开/关闭期间
 FA：    资产-折旧-运行折旧
-INV：  成本-会计关闭周期-库存会计期
+INV：  库存-会计关闭周期-库存会计期
+       Inventory->Accounting Close Cycle
 PO：   采购管理->设置->财务系统->会计->打开和关闭期间
 PA：    PA->Setup->System->PA Periods/GL Periods
 AGIS：设置-期间-打开/关闭

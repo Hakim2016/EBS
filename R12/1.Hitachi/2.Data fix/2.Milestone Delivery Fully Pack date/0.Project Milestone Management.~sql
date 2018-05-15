@@ -46,11 +46,12 @@ SELECT ROWID,
        attribute13,
        attribute14,
        attribute15
-  FROM xxpa_proj_progress_his_v
+  FROM xxpa_proj_progress_his_v v
  WHERE (to_date(period_name, 'MON-YY') < to_date('', 'MON-YY') OR '' IS NULL)
    AND (org_id = 101)
-   AND (project_id = 2575398)
-   AND (mfg_no = 'JED0202-VN');
+   --AND (project_id = 2575398)
+   --AND (mfg_no = 'JED0202-VN')
+   ;
    
 --2.xxpa_proj_milestone_manage
 /*CREATE OR REPLACE VIEW XXPA_PROJ_MILESTONE_MRG_V AS*/
@@ -61,7 +62,7 @@ SELECT xpmm.proj_milestone_id,
        pp.segment1          project_number,
        pt.task_id,
        pt.task_number       mfg_no,
-       xpmm.creation_date,
+       --xpmm.creation_date,
        xpmm.period_name,
        xpmm.ba_fully_packing_date,
        xpmm.fully_packing_date,
@@ -95,7 +96,9 @@ WHERE  pp.org_id               = hou.organization_id
   AND  pt.project_id           = xpmm.project_id(+)
   AND  pt.task_number          = xpmm.mfg_num(+)
   AND pp.org_id = 101
-  AND pp.segment1 = '53020400'
+  AND pp.segment1 = ''--'53020400'
+  --AND pt.task_number IN 
+  --('JED0210-VN','JED0211-VN','JED0212-VN','JED0219-VN','JED0220-VN','JED0225-VN')
   --AND xpmm.fully_packing_date IS NOT NULL
   --AND xpmm.fully_delivery_date IS NOT NULL
   --AND ROWNUM < 5

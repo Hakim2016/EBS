@@ -6,8 +6,4 @@ SELECT xic.interface_code,
        XIC.*
   FROM apps.xxfnd_interface_config_v xic
  WHERE 1 = 1
-  AND xic.remote_system_code = 'R3'
-  --AND xic.interface_code = 'IF62'
-  --AND xic.remote_system_code = 'HFG'
-  AND xic.type = 'O'
- ORDER BY 1;
+ ORDER BY 1
