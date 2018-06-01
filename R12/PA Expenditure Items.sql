@@ -6,29 +6,30 @@
 
 /*BEGIN
   fnd_global.apps_initialize(user_id      => 4270,
-                             resp_id      => 50676,
+                             resp_id      => 51249,
                              resp_appl_id => 660);
   mo_global.init('M');
   
 END;*/
 
-SELECT expenditure_item_id,
-       project_number,
-       task_number,
-       expenditure_type,
+SELECT v.expenditure_item_id pei_id,
+       v.project_number,
+       v.task_number,
+       v.expenditure_type,
+       v.expenditure_item_date,
+       NULL Employee_Supplier,
+       v.quantity,
+       v.unit_of_measure_m uom,
+       v.burdened_cost proj_func_burdened_cost,--
+       v.project_burdened_cost,--
+       v.accrued_revenue,
+       v.bill_amount,
+       v.expenditure_comment "comment",
+       v.expenditure_organization_name,
+       v.non_labor_resource,
        inventory_item,
        wip_resource,
-       expenditure_item_date,
-       quantity,
-       unit_of_measure_m,
        project_currency_code,
-       burdened_cost,
-       project_burdened_cost,
-       accrued_revenue,
-       bill_amount,
-       expenditure_comment,
-       expenditure_organization_name,
-       non_labor_resource,
        work_type_name,
        assignment_name,
        nlr_organization_name,
@@ -249,12 +250,14 @@ SELECT expenditure_item_id,
        document_type,
        document_distribution_type,
        expensed
-  FROM pa_expend_items_adjust2_v
+  FROM pa_expend_items_adjust2_v v
  WHERE 1=1
  --(project_id = 1194)
- AND project_number = '10101505'
+ --AND v.expenditure_item_id IN (15429305,15429306)
+ AND project_number = '53020044'--'10101505'
+ AND v.expenditure_item_date BETWEEN to_date('2018-03-31','yyyy-mm-dd') AND to_date('2018-03-31','yyyy-mm-dd') + 0.99999
  ORDER BY expenditure_item_id,
-          expenditure_item_date,
+          expenditure_item_date DESC,
           task_id,
           expenditure_id,
           nvl(source_expenditure_item_id,

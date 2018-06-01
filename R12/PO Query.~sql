@@ -1,0 +1,14 @@
+SELECT fu.user_name,poh.*,pol.*
+  FROM po_headers_all poh,
+       po_lines_all   pol,
+       fnd_user fu
+ WHERE 1 = 1
+ AND fu.user_id = poh.created_by
+ AND fu.user_name LIKE 'HAND%'
+   AND poh.po_header_id = pol.po_header_id
+   AND poh.org_id = 84
+   AND poh.cancel_flag = 'N'
+   AND poh.approved_flag = 'Y'
+   AND poh.creation_date >= to_date('20180301','yyyymmdd')
+--AND poh.segment1 = ''
+;

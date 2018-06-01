@@ -5,6 +5,7 @@ SELECT intf.actual_month    act_mon,
        intf.creation_date,
        intf.created_by,
        pt.task_number,
+       intf.model,
        intf.sale_amount,
        intf.cogs,
        intf.material,
@@ -31,23 +32,23 @@ SELECT intf.actual_month    act_mon,
    AND ppa.project_id = pt.project_id
    AND pt.top_task_id = top.task_id
    AND pt.task_id = intf.task_id
-   AND intf.org_id = 82--84--SHE --82--HEA
-   AND intf.eq_er_category = 'ER'
-      --AND intf.mfg_num IN ('SBC0256-SG')--('SBC0266-SG')
+   AND intf.org_id = 84--84--SHE --82--HEA
+   --AND intf.eq_er_category = 'ER'
+      AND intf.mfg_num IN ('JBL0023-IN')--('SBC0266-SG')
       --('SBC0266-SG','SBC0256-SG','SAE0191-SG'/*'TAE0970-TH', 'TAE0969-TH', 'TAE0968-TH'*/)
       --AND pt.task_number LIKE '%.D.11'
       --AND (pt.task_number NOT LIKE '%.EQ' AND pt.task_number NOT LIKE '%.ER')
-   AND intf.actual_month = to_date('2015-09-01', 'yyyy-mm-dd')
+   --AND intf.actual_month = to_date('2015-09-01', 'yyyy-mm-dd')
    --AND nvl(intf.subcon, 0) <> 0
       --AND ppa.segment1 = '213100127'
-   AND intf.additional_flag = 'N'
-   AND intf.creation_date < to_date('2018-04-25', 'yyyy-mm-dd')
-/*   AND intf.group_id = (SELECT MAX(t2.group_id)
+   --AND intf.additional_flag = 'N'
+   --AND intf.creation_date < to_date('2018-04-25', 'yyyy-mm-dd')
+   AND intf.group_id = (SELECT MAX(t2.group_id)
                           FROM xxpa_cost_gcpm_int t2
                          WHERE 1 = 1
                            AND t2.mfg_num = intf.mfg_num
                            AND t2.actual_month = intf.actual_month
-                           AND t2.task_id = intf.task_id)*/
+                           AND t2.task_id = intf.task_id)
  ORDER BY intf.actual_month DESC,
           intf.mfg_num DESC;
           

@@ -264,7 +264,22 @@ SELECT xdl.application_id,
    AND wta.transaction_id = wt.transaction_id
    AND wt.project_id = ppa.project_id(+)
    AND wt.task_id = pt.task_id(+);
+   
+--by Hakim 25-May-2018
+SELECT * FROM 
+xla.xla_transaction_entities xte
+WHERE 1=1
+AND xte.application_id = 707
+AND xte.source_id_int_1 = 54834283;
 
 SELECT * FROM fnd_application fa
 WHERE 1=1
 AND fa.application_id = 222;
+
+
+SELECT DISTINCT
+xdl.source_distribution_type, xdl.application_id
+--,xdl.*
+ FROM xla_distribution_links xdl
+WHERE 1=1
+;

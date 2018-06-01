@@ -56,7 +56,7 @@ END;*/
          AND oel.flow_status_code NOT IN ('CLOSED', 'CANCELLED', 'ENTERED')
          and ott.attribute5 IN ('EQ', 'PART')
          AND OEL.ATTRIBUTE1 IS NOT NULL
-         AND NOT EXISTS
+/*         AND NOT EXISTS
          --cond1
          --not exists in interface table
            --delivery status stay unchanged
@@ -71,7 +71,7 @@ END;*/
                      (select max(di.version)
                         from XXAR_DELIVERY_TO_R3_INT di
                        where di.SOURCE_ID = OEL.LINE_ID))--end of cond1
-                       
+*/                       
          --cond2
          --delivery status in interface table(Fully Delivered) <> 
          --                which in so line(Awaiting Delivered)
@@ -86,5 +86,5 @@ END;*/
 
          AND HOU.set_of_books_id = 2041--g_ledger_id
     --AND OEL.LAST_UPDATE_DATE > NVL(P_START_DATE,OEL.LAST_UPDATE_DATE)
-    AND oh.order_number = '53020400'
+    AND oh.order_number = '53020044'--'53020400'
     order by  OEL.LAST_UPDATE_DATE ;

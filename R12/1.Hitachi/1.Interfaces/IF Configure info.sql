@@ -9,5 +9,14 @@ SELECT xic.interface_code,
   AND xic.remote_system_code = 'R3'
   --AND xic.interface_code = 'IF62'
   --AND xic.remote_system_code = 'HFG'
-  AND xic.type = 'O'
+/*  AND xic.interface_code IN 
+  
+  (
+  'IF61','IF62','IF63','IF64', 'IF67','IF68'
+  ,
+  'IF77','IF78','IF79'
+  )*/
+  --AND xic.type = 'O'
+  --AND xic.USER_CONCURRENT_PROGRAM_NAME LIKE '%ixed%sset%'
+  --AND xic.enabled_flag = 'N'
  ORDER BY 1;
