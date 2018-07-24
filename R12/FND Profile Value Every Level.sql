@@ -154,20 +154,20 @@ SELECT flv.meaning level_meaning,
 --AND upper(profile_value.level_value_desc) = upper('HAND_GSL')
 -- AND UPPER(fpo.user_profile_option_name) LIKE UPPER('%persona%')
 
-SELECT fpo.profile_option_name,
-       fpo.user_profile_option_name,
-       fpo.*
-  FROM fnd_profile_options_vl fpo
- WHERE fpo.user_profile_option_name LIKE 'INV%RPC%';
+SELECT FPO.PROFILE_OPTION_NAME, FPO.USER_PROFILE_OPTION_NAME, FPO.*
+  FROM FND_PROFILE_OPTIONS_VL FPO
+ WHERE 1 = 1
+      --AND fpo.user_profile_option_name LIKE 'IEX: SMTP Host%'
+   AND FPO.USER_PROFILE_OPTION_NAME IN ('IEX: SMTP Host', 'IEX: SMTP From');
+--IEX: SMTP From            IEX_SMTP_FROM
+--IEX: SMTP Host            IEX_SMTP_HOST
+--        
 
 DECLARE
-  stat BOOLEAN;
+  STAT BOOLEAN;
 BEGIN
-  dbms_output.disable;
-  dbms_output.enable(100000);
-  stat := fnd_profile.save(x_name => 'INV_RPC_TIMEOUT',--'ORG_ID', 
-                            x_value => '300',--286, 
-                            x_level_name => 'SITE');
+  DBMS_OUTPUT.DISABLE;
+  DBMS_OUTPUT.ENABLE(100000);
 
   /*   IF ( not fnd_profile.save( x_name => 'APPS_SERVLET_AGENT',
                        x_value => '',
@@ -176,10 +176,39 @@ BEGIN
        raise_application_error(-20005, ' Failed to remove servlet profile option value for user with id:'
                ||x_user_id , true);
   END IF;*/
-  IF stat THEN
-    dbms_output.put_line('Stat = TRUE - profile updated');
+
+  STAT := FND_PROFILE.SAVE(X_NAME       => 'IEX_SMTP_FROM', --'ORG_ID', 
+                           X_VALUE      => 'erp.na@cn.chervongroup.com', --286, 
+                           X_LEVEL_NAME => 'SITE');
+  IF STAT THEN
+    DBMS_OUTPUT.PUT_LINE('Stat1 = TRUE - profile updated');
   ELSE
-    dbms_output.put_line('Stat = FALSE - profile NOT updated');
+    DBMS_OUTPUT.PUT_LINE('Stat1 = FALSE - profile NOT updated');
+  END IF;
+
+  STAT := FND_PROFILE.SAVE(X_NAME       => 'IEX_SMTP_HOST', --'ORG_ID', 
+                           X_VALUE      => '192.168.11.10', --286, 
+                           X_LEVEL_NAME => 'SITE');
+  IF STAT THEN
+    DBMS_OUTPUT.PUT_LINE('Stat2 = TRUE - profile updated');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Stat2 = FALSE - profile NOT updated');
   END IF;
   COMMIT;
 END;
+
+SELECT *
+  FROM FND_NEW_MESSAGES FNM
+ WHERE 1 = 1
+   AND FNM.MESSAGE_NAME IN ('IBY_FD_SRA_EMAIL_FROM');
+
+UPDATE FND_NEW_MESSAGES FNM
+   SET FNM.MESSAGE_TEXT = 'erp.na@cn.chervongroup.com'
+ WHERE 1 = 1
+   AND FNM.MESSAGE_NAME IN ('IBY_FD_SRA_EMAIL_FROM');
+COMMIT;
+
+SELECT *
+  FROM FND_NEW_MESSAGES FNM
+ WHERE 1 = 1
+   AND FNM.MESSAGE_NAME IN ('IBY_FD_SRA_EMAIL_FROM');
